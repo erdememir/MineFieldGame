@@ -1,4 +1,5 @@
 import java.util.Random;
+import java.util.Scanner;
 
 public class MineSweeper {
     String[][] mineFieldMap;
@@ -6,6 +7,8 @@ public class MineSweeper {
     int row;
     int col;
     int mineCount;
+    int userRow;
+    int userCol;
 
     MineSweeper(int row, int col) {
         this.mineFieldMap = new String[row][col];
@@ -13,6 +16,8 @@ public class MineSweeper {
         this.mineCount = (row * col) / 4;
         this.row = row;
         this.col = col;
+        this.userRow = userRow;
+        this.userCol = userCol;
     }
 
     void run() {
@@ -46,5 +51,35 @@ public class MineSweeper {
             }
             System.out.println();
         }
+    }
+
+    int rowSelection(int userRow) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Hamle yapmak istediğiniz satırı seçiniz: ");
+        userRow = input.nextInt();
+        return userRow;
+    }
+
+    int colSelection(int userCol) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Hamle yapmak istediğiniz sütunu seçiniz: ");
+        userCol = input.nextInt();
+        return userCol;
+    }
+
+    boolean isBound(int userRow, int userCol) {
+        if ((userCol > col) && (userRow > row) && (userCol < 0) && (userRow < 0)) {
+            System.out.println("Lütfen dahil olan koordinatları giriniz.");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    boolean fail() {
+        if(mineFieldMap[userRow][userCol].equals("*")){
+            return true;
+        }
+        return false;
     }
 }
