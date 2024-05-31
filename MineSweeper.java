@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -9,6 +10,7 @@ public class MineSweeper {
     int mineCount;
     int userRow;
     int userCol;
+    int userChoice = 0;
 
     MineSweeper(int row, int col) {
         this.mineFieldMap = new String[row][col];
@@ -24,6 +26,14 @@ public class MineSweeper {
         fillArray();
         randomNumber();
         printField();
+        while (isFail()) {
+            System.out.println(Arrays.deepToString(mineFieldMap));
+            if (isWin()) {
+                System.out.println("Tebrikler.");
+                break;
+            }
+            mapUpdater();
+        }
     }
 
     void fillArray() {
@@ -53,33 +63,40 @@ public class MineSweeper {
         }
     }
 
-    int rowSelection(int userRow) {
+    boolean isFail() {
         Scanner input = new Scanner(System.in);
-        System.out.print("Hamle yapmak istediğiniz satırı seçiniz: ");
-        userRow = input.nextInt();
-        return userRow;
-    }
-
-    int colSelection(int userCol) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Hamle yapmak istediğiniz sütunu seçiniz: ");
-        userCol = input.nextInt();
-        return userCol;
-    }
-
-    boolean isBound(int userRow, int userCol) {
-        if ((userCol > col) && (userRow > row) && (userCol < 0) && (userRow < 0)) {
-            System.out.println("Lütfen dahil olan koordinatları giriniz.");
+        System.out.print("Satır: ");
+        this.userRow = input.nextInt();
+        System.out.print("Sütun: ");
+        this.userCol = input.nextInt();
+        if (mineFieldMap[userRow][userCol].equals("*")) {
             return false;
-        } else {
-            return true;
         }
+        mineFieldMap[userRow][userCol] = "+";
+        return true;
     }
 
-    boolean fail() {
-        if(mineFieldMap[userRow][userCol].equals("*")){
-            return true;
+    boolean isWin() {
+        for (String[] value : mineFieldMap) {
+            for (String value2 : value) {
+                if (value2.equals("-")) {
+                    return false;
+                }
+            }
         }
-        return false;
+        return true;
+    }
+
+    void mapUpdater() {
+
+        for (int x = this.userRow - 1; x < this.userRow + 1; x++) {
+            for (int y = this.userCol - 1; y < this.userCol + 1; y++) {
+                if (x == this.userRow && y == this.userCol) continue;
+                if (mineFieldMap[y][x].equals("*")) {
+                    this.userChoice++;
+                }
+            }
+        }
+        System.out.println(this.userChoice);
     }
 }
