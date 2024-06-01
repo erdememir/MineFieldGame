@@ -92,7 +92,7 @@ public class MineSweeper {
         for (int x = this.userRow - 1; x < this.userRow + 1; x++) {
             for (int y = this.userCol - 1; y < this.userCol + 1; y++) {
                 if (x == this.userRow && y == this.userCol) continue;
-                if (mineFieldMap[x][y].equals("*")) {
+                if (mineFieldMap[y][x].equals("*")) {
                     this.userChoice++;
                 }
             }
