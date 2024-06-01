@@ -27,7 +27,7 @@ public class MineSweeper {
         randomNumber();
         printField();
         while (isFail()) {
-            System.out.println(Arrays.deepToString(mineFieldMap));
+            printField();
             if (isWin()) {
                 System.out.println("Tebrikler.");
                 break;
@@ -69,10 +69,11 @@ public class MineSweeper {
         this.userRow = input.nextInt();
         System.out.print("Sütun: ");
         this.userCol = input.nextInt();
-        if (mineFieldMap[userRow][userCol].equals("*")) {
+        if (mineFieldMap[userCol][userRow].equals("*")) {
+            System.out.println("bom");
             return false;
         }
-        mineFieldMap[userRow][userCol] = "+";
+        mineFieldMap[userCol][userRow] = "+";
         return true;
     }
 
@@ -88,15 +89,15 @@ public class MineSweeper {
     }
 
     void mapUpdater() {
-
         for (int x = this.userRow - 1; x < this.userRow + 1; x++) {
             for (int y = this.userCol - 1; y < this.userCol + 1; y++) {
                 if (x == this.userRow && y == this.userCol) continue;
-                if (mineFieldMap[y][x].equals("*")) {
+                if (mineFieldMap[x][y].equals("*")) {
                     this.userChoice++;
                 }
             }
         }
-        System.out.println(this.userChoice);
+        System.out.println("Çevresindeki mayın sayısı: " + this.userChoice);
+        this.userChoice = 0;
     }
 }
