@@ -69,11 +69,11 @@ public class MineSweeper {
         this.userRow = input.nextInt();
         System.out.print("Sütun: ");
         this.userCol = input.nextInt();
-        if (mineFieldMap[userCol][userRow].equals("*")) {
+        if (mineFieldMap[userRow][userCol].equals("*")) {
             System.out.println("bom");
             return false;
         }
-        mineFieldMap[userCol][userRow] = "+";
+        mineFieldMap[userRow][userCol] = "+";
         return true;
     }
 
