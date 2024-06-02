@@ -44,6 +44,7 @@ public class MineSweeper {
             System.out.println();
             printField();
             if (isWin()) {
+                System.out.println();
                 System.out.println("Tebrikler.");
                 break;
             }
@@ -79,6 +80,7 @@ public class MineSweeper {
 
     boolean isFail() {
         if (this.mineFieldMap[this.userRow][this.userCol].equals("*")) {
+            System.out.println();
             System.out.println("BOOM!");
             return false;
         }
@@ -114,6 +116,7 @@ public class MineSweeper {
 
     boolean checkValidate() {
         Scanner input = new Scanner(System.in);
+        System.out.println();
         System.out.print("Satır: ");
         this.userRow = input.nextInt();
         System.out.print("Sütun: ");

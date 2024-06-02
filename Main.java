@@ -5,6 +5,7 @@ import java.util.Scanner;
             Scanner input = new Scanner(System.in);
             while (true) {
                 System.out.println("Mayın tarlası oyununa hoşgeldiniz. İyi Eğlenceler!");
+                System.out.println();
                 System.out.print("Satır sayısı giriniz: ");
                 int row = input.nextInt();
                 System.out.print("Sütün sayısı giriniz: ");
