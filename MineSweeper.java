@@ -11,6 +11,7 @@ public class MineSweeper {
     int userRow;
     int userCol;
     int userChoice = 0;
+    int hyphenCount = 0;
 
     MineSweeper(int row, int col) {
         this.mineFieldMap = new String[row][col];
@@ -20,11 +21,16 @@ public class MineSweeper {
         this.col = col;
         this.userRow = userRow;
         this.userCol = userCol;
+        this.hyphenCount = hyphenCount;
     }
 
     void run() {
         fillArray();
         randomNumber();
+        //System.out.println(Arrays.deepToString(this.mineFieldMap));
+        System.out.println();
+        System.out.println("===============");
+        System.out.println();
         printField();
         while (true) {
             if (checkValidate()) {
@@ -33,6 +39,9 @@ public class MineSweeper {
             }
             if (!isFail()) break;
             mapUpdater();
+            System.out.println();
+            System.out.println("===============");
+            System.out.println();
             printField();
             if (isWin()) {
                 System.out.println("Tebrikler.");
@@ -55,22 +64,22 @@ public class MineSweeper {
         for (int i = 0; i < this.mineCount; i++) {
             int random1 = rGen.nextInt(this.row);
             int random2 = rGen.nextInt(this.col);
-            mineFieldMap[random1][random2] = "*";
+            this.mineFieldMap[random1][random2] = "*";
         }
     }
 
     void printField() {
         for (int i = 0; i < this.row; i++) {
             for (int j = 0; j < this.col; j++) {
-                System.out.print(this.mineFieldMap[i][j] + "   ");
+                System.out.print(this.mineFieldUserMap[i][j] + "   ");
             }
             System.out.println();
         }
     }
 
     boolean isFail() {
-        if (mineFieldMap[userRow][userCol].equals("*")) {
-            System.out.println("bom");
+        if (this.mineFieldMap[this.userRow][this.userCol].equals("*")) {
+            System.out.println("BOOM!");
             return false;
         }
         //mineFieldMap[userRow][userCol] = "+";
@@ -78,7 +87,7 @@ public class MineSweeper {
     }
 
     boolean isWin() {
-        for (String[] value : mineFieldMap) {
+        for (String[] value : this.mineFieldMap) {
             for (String value2 : value) {
                 if (value2.equals("-")) {
                     return false;
@@ -92,14 +101,14 @@ public class MineSweeper {
         for (int x = this.userRow - 1; x <= this.userRow + 1; x++) {
             for (int y = this.userCol - 1; y <= this.userCol + 1; y++) {
                 if (x == this.userRow && y == this.userCol) continue;
-                if (x < 0 || y < 0 || x >= mineFieldMap.length || y >= mineFieldMap[x].length) continue;
-                if (mineFieldMap[x][y].equals("*")) {
+                if (x < 0 || y < 0 || x >= this.mineFieldMap.length || y >= this.mineFieldMap[x].length) continue;
+                if (this.mineFieldMap[x][y].equals("*")) {
                     this.userChoice++;
                 }
             }
         }
-        mineFieldMap[userRow][userCol] = String.valueOf(this.userChoice);
-
+        this.mineFieldUserMap[this.userRow][this.userCol] = String.valueOf(this.userChoice);
+        this.mineFieldMap[this.userRow][this.userCol] = String.valueOf(this.userChoice);
         this.userChoice = 0;
     }
 
@@ -109,6 +118,6 @@ public class MineSweeper {
         this.userRow = input.nextInt();
         System.out.print("Sütun: ");
         this.userCol = input.nextInt();
-        return (userRow < 0 || userCol < 0 || userRow > this.row || userCol > this.col);
+        return (this.userRow < 0 || this.userCol < 0 || this.userRow > this.row || this.userCol > this.col);
     }
 }
