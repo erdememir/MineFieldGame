@@ -26,13 +26,18 @@ public class MineSweeper {
         fillArray();
         randomNumber();
         printField();
-        while (isFail()) {
+        while (true) {
+            if (checkValidate()) {
+                System.out.println("Geçersiz koordinat!");
+                continue;
+            }
+            if (!isFail()) break;
+            mapUpdater();
             printField();
             if (isWin()) {
                 System.out.println("Tebrikler.");
                 break;
             }
-            mapUpdater();
         }
     }
 
@@ -64,16 +69,11 @@ public class MineSweeper {
     }
 
     boolean isFail() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Satır: ");
-        this.userRow = input.nextInt();
-        System.out.print("Sütun: ");
-        this.userCol = input.nextInt();
         if (mineFieldMap[userRow][userCol].equals("*")) {
             System.out.println("bom");
             return false;
         }
-        mineFieldMap[userRow][userCol] = "+";
+        //mineFieldMap[userRow][userCol] = "+";
         return true;
     }
 
@@ -89,15 +89,26 @@ public class MineSweeper {
     }
 
     void mapUpdater() {
-        for (int x = this.userRow - 1; x < this.userRow + 1; x++) {
-            for (int y = this.userCol - 1; y < this.userCol + 1; y++) {
+        for (int x = this.userRow - 1; x <= this.userRow + 1; x++) {
+            for (int y = this.userCol - 1; y <= this.userCol + 1; y++) {
                 if (x == this.userRow && y == this.userCol) continue;
+                if (x < 0 || y < 0 || x >= mineFieldMap.length || y >= mineFieldMap[x].length) continue;
                 if (mineFieldMap[x][y].equals("*")) {
                     this.userChoice++;
                 }
             }
         }
-        System.out.println("Çevresindeki mayın sayısı: " + this.userChoice);
+        mineFieldMap[userRow][userCol] = String.valueOf(this.userChoice);
+
         this.userChoice = 0;
+    }
+
+    boolean checkValidate() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Satır: ");
+        this.userRow = input.nextInt();
+        System.out.print("Sütun: ");
+        this.userCol = input.nextInt();
+        return (userRow < 0 || userCol < 0 || userRow > this.row || userCol > this.col);
     }
 }
