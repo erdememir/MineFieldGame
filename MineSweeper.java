@@ -11,7 +11,6 @@ public class MineSweeper {
     int userRow;
     int userCol;
     int userChoice = 0;
-    int hyphenCount = 0;
 
     MineSweeper(int row, int col) {
         this.mineFieldMap = new String[row][col];
@@ -21,7 +20,6 @@ public class MineSweeper {
         this.col = col;
         this.userRow = userRow;
         this.userCol = userCol;
-        this.hyphenCount = hyphenCount;
     }
 
     void run() {
