@@ -82,7 +82,11 @@ public class MineSweeper {
             System.out.println("BOOM!");
             return false;
         }
-        //mineFieldMap[userRow][userCol] = "+";
+        if (!(this.mineFieldMap[this.userRow][this.userCol].equals("-"))){
+            System.out.println();
+            System.out.println("Daha önce girilmemiş bir koordinat giriniz.");
+        }
+        mineFieldMap[userRow][userCol] = "+";
         return true;
     }
 
